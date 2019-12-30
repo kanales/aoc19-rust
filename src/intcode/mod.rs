@@ -83,30 +83,24 @@ impl TryFrom<i32> for Opcode<Mode> {
     }
 }
 
-use std::collections::HashMap;
-
 #[derive(Debug)]
 pub struct Process {
     pc: usize,
     intcode: Vec<i32>,
-    updates: HashMap<usize, i32>,
 }
 
 impl Process {
     pub fn new(code: Intcode) -> Self {
-        Process {
-            pc: 0,
-            intcode: code.into(),
-            updates: HashMap::new(),
-        }
+        let v: Vec<i32> = code.into();
+        Process { pc: 0, intcode: v }
     }
 
     pub fn set(&mut self, index: &usize, value: i32) {
-        if value == self.intcode[*index] {
-            self.updates.remove(index);
-        } else {
-            self.updates.insert(*index, value);
-        }
+        self.intcode[*index] = value;
+    }
+
+    pub fn get(&self, index: &usize) -> i32 {
+        self.intcode[*index]
     }
 
     pub fn jmp(&mut self, pos: usize) {
@@ -117,16 +111,10 @@ impl Process {
         self.pc += steps;
     }
 
-    pub fn get(&self, index: usize) -> i32 {
-        match self.updates.get(&index) {
-            Some(v) => *v,
-            None => self.intcode[index],
-        }
-    }
-
     fn try_set(&mut self, index: i32, val: i32) -> Result<(), String> {
-        match index.try_into() {
-            Ok(idx) => Ok(self.set(&idx, val)),
+        let res: Result<usize, _> = index.try_into();
+        match res {
+            Ok(idx) => Ok(self.intcode[idx as usize] = val),
             Err(_) => Err(format!("Invalid index {:?}", index)),
         }
     }
@@ -136,8 +124,11 @@ impl Process {
         Box::new(move |m| {
             i += 1;
             match m {
-                Pos => self.get(self.get(self.pc + i).try_into().unwrap()),
-                Imm => self.get(self.pc + i),
+                Pos => {
+                    let idx: usize = self.intcode[&self.pc + i].try_into().unwrap();
+                    self.intcode[idx]
+                }
+                Imm => self.intcode[self.pc + i],
             }
         })
     }
@@ -147,7 +138,7 @@ impl Process {
     }
 
     fn current(&self) -> Result<Opcode<i32>, String> {
-        let code: Opcode<Mode> = self.get(self.pc).try_into()?;
+        let code: Opcode<Mode> = self.intcode[self.pc].try_into()?;
         let op = self.populate(code);
         Ok(op)
     }

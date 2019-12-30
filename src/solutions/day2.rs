@@ -3,7 +3,7 @@ use crate::intcode::{Intcode, Process};
 pub fn part1(input: &Intcode) -> i32 {
     let mut p = Process::new(input.replace(12, 2));
     p.run();
-    p.get(0)
+    p.get(&0)
 }
 fn pairs<'a>(input: &'a Vec<i32>) -> Vec<(&'a i32, &'a i32)> {
     input
@@ -20,7 +20,7 @@ pub fn part2(input: &Intcode) -> i32 {
         .filter(|(&n, &v)| {
             let mut p = Process::new(input.replace(n, v));
             p.run();
-            p.get(0) == 19690720
+            p.get(&0) == 19690720
         })
         .nth(0)
         .unwrap();

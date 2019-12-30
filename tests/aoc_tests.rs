@@ -52,22 +52,22 @@ fn day5_2_test() {
     assert_eq!(run_day(5, 2).unwrap(), 3892695);
 }
 
-#[test]
+/*#[test]
 fn day6_1_test() {
-    assert_eq!(run_day(2, 1).unwrap(), panic!("undefined value"));
+    unimplemented!() //assert_eq!(run_day(2, 1).unwrap(), {});
 }
 
 #[test]
 fn day6_2_test() {
-    assert_eq!(run_day(2, 2).unwrap(), panic!("undefined value"));
+    unimplemented!() //assert_eq!(run_day(2, 2).unwrap(), {});
 }
 
 #[test]
 fn day7_1_test() {
-    assert_eq!(run_day(2, 1).unwrap(), panic!("undefined value"));
+    unimplemented!() //assert_eq!(run_day(2, 1).unwrap(), panic!("undefined value"));
 }
 
 #[test]
 fn day7_2_test() {
-    assert_eq!(run_day(2, 2).unwrap(), panic!("undefined value"));
-}
+    unimplemented!() //assert_eq!(run_day(2, 2).unwrap(), panic!("undefined value"));
+}*/
