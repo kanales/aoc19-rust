@@ -26,3 +26,15 @@ pub fn part2(input: &Intcode) -> i32 {
         .unwrap();
     100 * n + v
 }
+
+#[test]
+pub fn part1_test() {
+    let input = super::get_input(2).unwrap();
+    assert_eq!(part1(&input), 4330636);
+}
+
+#[test]
+pub fn part2_test() {
+    let input = super::get_input(2).unwrap();
+    assert_eq!(part2(&input), 6086);
+}

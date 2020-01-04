@@ -1,13 +1,21 @@
-use crate::intcode::{run_until_end, Intcode, Process};
+use crate::intcode::{Intcode, Process};
 
 pub fn part1(input: &Intcode) -> i32 {
-    let mut process = Process::new(input.clone());
-    let res = run_until_end(&mut process, &mut Some(1).into_iter());
-    res.unwrap()
+    Process::new(input.clone()).run_with(|_| 1).unwrap()
 }
 
 pub fn part2(input: &Intcode) -> i32 {
-    let mut process = Process::new(input.clone());
-    let res = run_until_end(&mut process, &mut Some(5).into_iter());
-    res.unwrap()
+    Process::new(input.clone()).run_with(|_| 5).unwrap()
+}
+
+#[test]
+pub fn part1_test() {
+    let input = super::get_input(5).unwrap();
+    assert_eq!(part1(&input), 13787043);
+}
+
+#[test]
+pub fn part2_test() {
+    let input = super::get_input(5).unwrap();
+    assert_eq!(part2(&input), 3892695);
 }

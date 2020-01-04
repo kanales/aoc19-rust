@@ -45,3 +45,15 @@ pub fn part2(input: &Input) -> i32 {
     let vec = &input.0;
     vec.iter().map(iter_fuel).sum()
 }
+
+#[test]
+pub fn part1_test() {
+    let input = super::get_input(1).unwrap();
+    assert_eq!(part1(&input), 3464735);
+}
+
+#[test]
+pub fn part2_test() {
+    let input = super::get_input(1).unwrap();
+    assert_eq!(part2(&input), 5194211);
+}

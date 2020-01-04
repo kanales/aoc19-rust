@@ -150,6 +150,26 @@ impl Process {
             Err(s) => EvaluationError(s),
         }
     }
+
+    /**
+     * Runs Process with a function that provides input according to the last input
+     */
+    pub fn run_with<F: Fn(Option<i32>) -> i32>(&mut self, f: F) -> Option<i32> {
+        let mut evaluation = self.run();
+        let mut output: Option<i32> = None;
+        loop {
+            match evaluation {
+                Evaluation::Input(g) => evaluation = g(f(output)),
+                Evaluation::Output(o, ev) => {
+                    output = Some(o);
+                    evaluation = *ev;
+                }
+                Evaluation::Halt => break,
+                Evaluation::EvaluationError(e) => return None,
+            }
+        }
+        output
+    }
     pub fn run_inner(&mut self) -> Result<Evaluation, String> {
         let curr = self.current();
         //println!("[{}]\t{:?}", self.pc, curr);
@@ -226,24 +246,4 @@ impl<'a> fmt::Debug for Evaluation<'a> {
             EvaluationError(err) => write!(f, "EvaluationError {}", err),
         }
     }
-}
-use std::iter::Iterator;
-pub fn run_until_end(
-    process: &mut Process,
-    it: &mut impl Iterator<Item = i32>,
-) -> Result<i32, String> {
-    let mut evaluation = process.run();
-    let mut output: Result<i32, String> = Err("No output found".to_owned());
-    loop {
-        match evaluation {
-            Evaluation::Input(f) => evaluation = f(it.next().unwrap()),
-            Evaluation::Output(o, ev) => {
-                output = Ok(o);
-                evaluation = *ev;
-            }
-            Evaluation::Halt => break,
-            Evaluation::EvaluationError(e) => return Err(e),
-        }
-    }
-    output
 }
