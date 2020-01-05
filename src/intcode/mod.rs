@@ -135,14 +135,7 @@ pub enum ProcessStatus {
 }
 use ProcessStatus::*;
 
-impl ProcessStatus {
-    pub fn out(&self) -> Option<i32> {
-        match self {
-            Outputting(x) => Some(*x),
-            _ => None,
-        }
-    }
-}
+impl ProcessStatus {}
 
 impl Process {
     pub fn new(code: Intcode) -> Self {
