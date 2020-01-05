@@ -5,6 +5,7 @@ pub mod day4;
 pub mod day5;
 pub mod day6;
 pub mod day7;
+pub mod day8;
 
 use std::error::Error;
 use std::fmt;
@@ -85,6 +86,11 @@ pub fn run_day(day: i32, part: i32) -> Result<i32, Box<dyn Error>> {
         7 => match part {
             1 => day7::part1(&get_input(7)?),
             2 => day7::part2(&get_input(7)?),
+            _ => Err(default)?,
+        },
+        8 => match part {
+            1 => day8::part1(&get_input(8)?),
+            //2 => day8::part2(&get_input(7)?),
             _ => Err(default)?,
         },
         _ => Err(default)?,

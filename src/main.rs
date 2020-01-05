@@ -3,13 +3,14 @@ extern crate itertools;
 #[macro_use]
 mod solutions;
 
-use solutions::day6::*;
+use solutions::day8::*;
 
 fn main() {
-    let input: OrbitTree = solutions::get_input(6).unwrap();
-    let _tree: OrbitTree = "COM)B\nB)C\nC)D\nD)E\nE)F\nB)G\nG)H\nD)I\nE)J\nJ)K\nK)L\nK)YOU\nI)SAN"
-        .parse()
-        .unwrap();
-    //println!("{:?}", tree);
-    println!("{:?}", input.path(&"YOU".to_owned(), &"SAN".to_owned()));
+    let input: String = solutions::get_input(8).unwrap();
+    //let input = "0222112222120000";
+    let v: Option<Vec<u8>> = input.chars().map(digit_to_u8).collect();
+    let img = Image::new(6, 25, v.unwrap());
+
+    let flatimg = img.flatten();
+    println!("{}", flatimg);
 }

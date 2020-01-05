@@ -68,7 +68,6 @@ impl ProcessChain {
                 if p.status() == ProcessStatus::Exit {}
                 i += 1;
             }
-            println!("{:?}", memory);
         }
         memory[memory.len() - 1]
     }
