@@ -25,7 +25,7 @@ I will keep updating this while I learn more about the language.
 - [ ] day 4
 - [x] day 5
 - [ ] day 6
-- [ ] day 7
+- [x] day 7
 - [ ] day 8
 - [ ] day 9
 - [ ] day 10

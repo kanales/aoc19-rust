@@ -46,6 +46,7 @@ pub fn part2(input: &Input) -> i32 {
     vec.iter().map(iter_fuel).sum()
 }
 
+// TESTS
 #[test]
 pub fn part1_test() {
     let input = super::get_input(1).unwrap();

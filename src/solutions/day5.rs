@@ -1,11 +1,27 @@
-use crate::intcode::{Intcode, Process};
+use crate::intcode::{Intcode, Process, ProcessStatus};
 
 pub fn part1(input: &Intcode) -> i32 {
-    Process::new(input.clone()).run_with(|_| 1).unwrap()
+    let mut p = Process::new(input.clone());
+    p.resume(); // start process
+    p.feed(1); // give command
+
+    let mut last = 0;
+    while let ProcessStatus::Outputting(x) = p.resume() {
+        last = x;
+    }
+    last
 }
 
 pub fn part2(input: &Intcode) -> i32 {
-    Process::new(input.clone()).run_with(|_| 5).unwrap()
+    let mut p = Process::new(input.clone());
+
+    p.resume(); // start process
+    p.feed(5); // give command
+    if let ProcessStatus::Outputting(x) = p.resume() {
+        x
+    } else {
+        panic!("Not outputing")
+    }
 }
 
 #[test]
